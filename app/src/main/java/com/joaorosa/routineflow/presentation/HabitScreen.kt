@@ -26,7 +26,13 @@ fun HabitScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Meus Hábitos Diários") })
+            TopAppBar(
+                title = { Text("Meus Hábitos Diários") },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary
+                )
+            )
         }
     ) { padding ->
         Column(
@@ -35,7 +41,6 @@ fun HabitScreen(
                 .padding(padding)
                 .padding(16.dp)
         ) {
-            
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -45,14 +50,24 @@ fun HabitScreen(
                     onValueChange = { newHabitTitle = it },
                     label = { Text("Novo hábito (ex: Beber 2L de água)") },
                     modifier = Modifier.weight(1f),
-                    singleLine = true
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f),
+                        focusedLabelColor = MaterialTheme.colorScheme.primary,
+                        cursorColor = MaterialTheme.colorScheme.primary
+                    )
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Button(
                     onClick = {
                         viewModel.addHabit(newHabitTitle)
                         newHabitTitle = ""
-                    }
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
+                    )
                 ) {
                     Icon(Icons.Default.Add, contentDescription = "Adicionar")
                 }
@@ -94,7 +109,10 @@ fun HabitItem(
         ) {
             Checkbox(
                 checked = habit.isCompleted,
-                onCheckedChange = { onToggle() }
+                onCheckedChange = { onToggle() },
+                colors = CheckboxDefaults.colors(
+                    checkedColor = MaterialTheme.colorScheme.primary
+                )
             )
             Text(
                 text = habit.title,
